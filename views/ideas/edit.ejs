@@ -1,4 +1,9 @@
 <% include ../partials/header%>
+    <% if(errors.length > 0) { %>
+        <% errors.forEach((error) => { %>
+            <div class="alert alert-danger"><%= error.text %></div>
+        <% }); %>
+    <% } %>
     <div class="card card-body">
         <h3>Edit Bucket List Entry <%= idea.title %></h3>
         <form action="/ideas/<%= idea.id %>?_method=PUT" method="post">
