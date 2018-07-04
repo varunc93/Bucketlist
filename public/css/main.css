@@ -1,0 +1,13 @@
+img.images-ideas {
+    border: 1px solid #ddd; /* Gray border */
+    border-radius: 4px;  /* Rounded border */
+    padding: 5px; /* Some padding */
+    width: 200px; /* Set a small width */
+    height: 200px; /* Set a small height */
+}
+
+div.idea-body {
+    display: flex;
+    align-items: wrap;
+    justify-content: space-between;
+}

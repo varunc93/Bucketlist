@@ -1,0 +1,20 @@
+<% include ../partials/header%>
+    <div class="card card-body">
+        <h3>Edit Bucket List Entry <%= idea.title %></h3>
+        <form action="/ideas/<%= idea.id %>?_method=PUT" method="post">
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" class="form-control" name="title" value="<%= idea.title %>" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea class="form-control" name="description" required><%= idea.description %></textarea>
+            </div>
+            <div class="form-group">
+                <label for="image">Image</label>
+                <input type="text" class="form-control" value="<%= idea.image %>" name="image">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+<% include ../partials/footer%>
