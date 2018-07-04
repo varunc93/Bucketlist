@@ -23,7 +23,11 @@ router.get('/', ensureAuthenticated, (req, res) => {
 
 //Add Idea Page
 router.get('/add', ensureAuthenticated, (req, res) => {
-    res.render('ideas/add', { errors: errors });
+    if(req.body.title)
+        res.render('ideas/add', { errors: errors });
+    else {
+        res.render('ideas/add', { errors: "" });
+    }
 });
 
 //Handle form submit
@@ -67,6 +71,7 @@ router.get('/edit/:id', ensureAuthenticated, (req, res) => {
             res.redirect('/ideas');
         } else {
             res.render('ideas/edit', {
+                errors: "",
                 idea: idea
             });
         }
@@ -75,13 +80,21 @@ router.get('/edit/:id', ensureAuthenticated, (req, res) => {
 
 //Handle Edit Submit
 router.put('/:id', ensureAuthenticated, (req, res) => {
+    errors.length = 0;
     errorHandle(req);
     if (errors.length > 0) {
-        res.render("ideas/edit/:id", {
-            errors: errors,
-            title: req.body.title,
-            description: req.body.description,
-            image: req.body.image
+        Idea.findOne({
+            _id: req.params.id
+        }).then(idea => {
+            if (idea.user != req.user.id) {
+                req.flash('error_msg', 'Not authorized!');
+                res.redirect('/ideas');
+            } else {
+                res.render('ideas/edit', {
+                    errors: errors,
+                    idea: idea
+                });
+            }
         });
     }
     else {
